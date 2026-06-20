@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+obroci.db
+.DS_Store
+.venv/
+venv/
+obroci.db-journal
+*.db-journal
+
+# prezentacijski materijali (ne idu na GitHub)
+SKRIPTA_VIDEO.md
+KaloMjer_prezentacija.pdf
