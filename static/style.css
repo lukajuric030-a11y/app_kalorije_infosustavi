@@ -91,9 +91,9 @@ h1 {
     padding: 3px 9px;
     border-radius: 12px;
 }
-.tip-dorucak { background: #fff3cd; color: #664d03; }
-.tip-rucak { background: #d1e7dd; color: #0f5132; }
-.tip-vecera { background: #e2d9f3; color: #3d2c8d; }
+.tip-dorucak { background: #f0ad4e; color: #fff; }
+.tip-rucak { background: #198754; color: #fff; }
+.tip-vecera { background: #6f42c1; color: #fff; }
 .kcal-cell {
     font-weight: 600;
     color: #198754;

@@ -108,17 +108,24 @@ document.getElementById("g-dodaj-obrok").addEventListener("click", async () => {
     const grami = parseFloat(gGrami.value);
     if (!grami || grami <= 0) { alert("Upiši količinu u gramima."); return; }
 
+    let datum = document.getElementById("g-datum").value;
+    if (!datum) {
+        datum = new Date().toISOString().slice(0, 10);
+        document.getElementById("g-datum").value = datum;
+    }
+
     const podaci = {
-        datum: document.getElementById("g-datum").value,
+        datum: datum,
         tip: aktivniTip,
         naziv_jela: `${odabranoJelo.n} ${grami}g`,
         kalorije: Math.round(odabranoJelo.k * grami / 100)
     };
-    await fetch("/api/obroci", {
+    const r = await fetch("/api/obroci", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(podaci)
     });
+    if (!r.ok) { alert("Obrok nije spremljen, provjeri unos."); return; }
 
     odabranoJelo = null;
     odabir.classList.add("d-none");
@@ -220,11 +227,13 @@ forma.addEventListener("submit", async (e) => {
         kalorije: document.getElementById("kalorije").value
     };
 
+    let r;
     if (id) {
-        await fetch("/api/obroci/" + id, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(podaci) });
+        r = await fetch("/api/obroci/" + id, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(podaci) });
     } else {
-        await fetch("/api/obroci", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(podaci) });
+        r = await fetch("/api/obroci", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(podaci) });
     }
+    if (!r.ok) { alert("Obrok nije spremljen, provjeri unos."); return; }
 
     resetForme();
     osvjezi();
