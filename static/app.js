@@ -196,7 +196,7 @@ async function ucitajGraf() {
             plugins: { legend: { display: true } },
             scales: {
                 x: { stacked: true, grid: { display: false } },
-                y: { stacked: true, beginAtZero: true, ticks: { stepSize: 500 }, grid: { color: "rgba(0,0,0,0.05)" } }
+                y: { stacked: true, min: 1000, max: 3500, ticks: { stepSize: 500 }, grid: { color: "rgba(0,0,0,0.05)" } }
             }
         }
     });
