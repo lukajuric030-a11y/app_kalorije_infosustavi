@@ -162,10 +162,10 @@ async function ucitajObroke(datum = null) {
     }
 }
 
-// statistika za danas
-async function ucitajStatistiku() {
-    const danas = new Date().toISOString().slice(0, 10);
-    const r = await fetch("/api/obroci?datum=" + danas);
+// statistika za danas ili za filtrirani dan
+async function ucitajStatistiku(datum = null) {
+    const dan = datum || new Date().toISOString().slice(0, 10);
+    const r = await fetch("/api/obroci?datum=" + dan);
     const obroci = await r.json();
 
     const ukupno = obroci.reduce((z, o) => z + o.kalorije, 0);
@@ -173,6 +173,10 @@ async function ucitajStatistiku() {
     document.getElementById("stat-ukupno").textContent = ukupno;
     document.getElementById("stat-broj").textContent = broj;
     document.getElementById("stat-prosjek").textContent = broj ? Math.round(ukupno / broj) : 0;
+
+    const oznaka = datum ? formatDatum(datum) : "danas";
+    document.getElementById("lbl-ukupno").textContent = oznaka;
+    document.getElementById("lbl-broj").textContent = oznaka;
 }
 
 // graf kalorija po danu i tipu
@@ -203,7 +207,11 @@ async function ucitajGraf() {
             plugins: { legend: { display: true } },
             scales: {
                 x: { stacked: true, grid: { display: false } },
-                y: { stacked: true, min: 1000, max: 3500, ticks: { stepSize: 500 }, grid: { color: "rgba(0,0,0,0.05)" } }
+                y: {
+                    stacked: true, beginAtZero: true, max: 3500,
+                    afterBuildTicks: os => { os.ticks = [0, 400, 600, 1000, 1500, 2000, 2500, 3000, 3500].map(v => ({ value: v })); },
+                    grid: { color: "rgba(0,0,0,0.05)" }
+                }
             }
         }
     });
@@ -275,11 +283,12 @@ async function obrisiObrok(id) {
 // === filter ===
 document.getElementById("filter-btn").addEventListener("click", () => {
     const datum = document.getElementById("filter-datum").value;
-    if (datum) ucitajObroke(datum);
+    if (datum) { ucitajObroke(datum); ucitajStatistiku(datum); }
 });
 document.getElementById("filter-reset").addEventListener("click", () => {
     document.getElementById("filter-datum").value = "";
     ucitajObroke();
+    ucitajStatistiku();
 });
 
 function formatDatum(iso) {

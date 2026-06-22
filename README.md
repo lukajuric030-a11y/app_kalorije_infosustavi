@@ -5,8 +5,7 @@ kalorija - korisnik unosi obroke koje pojede kroz dan i vidi koliko je kalorija 
 Ima CRUD operacije nad obrocima, podatke sprema u SQLite bazu, a kalorije prikazuje na grafu.
 
 ## Ideja
-
-Htio sam jednostavnu aplikaciju gdje brzo zapišeš što si pojeo i odmah vidiš koliko si
+Kao profesionalni sportaš i Hrvatski reprezentativac cilj mi je bio napraviti jednostavnu aplikaciju gdje brzo zapišeš što si pojeo i odmah vidiš koliko si
 kcal unio, bez kompliciranja. Na početku sam imao dvije klase (Obrok i DnevniCilj) ali
 su bile nepovezane pa sam to pojednostavio. Kasnije sam namirnice izdvojio u svoju tablicu.
 
@@ -50,23 +49,12 @@ Dvije tablice:
 
 **Namirnica**: id, naziv, kcal100 (kalorije na 100g)
 
-## API rute
-
-- GET `/api/obroci` - svi obroci (ili `?datum=YYYY-MM-DD`)
-- POST `/api/obroci` - dodaj obrok
-- PUT `/api/obroci/<id>` - uredi obrok
-- DELETE `/api/obroci/<id>` - obriši obrok
-- GET `/api/kalorije-po-danu` - kalorije po danu i tipu (za graf)
-- GET `/api/namirnice` - sve namirnice iz baze
-- POST `/api/namirnice` - dodaj namirnicu
-- DELETE `/api/namirnice/<id>` - obriši namirnicu
 
 ## Kako pokrenuti ovu aplikaciju? 
 
-Potrebno skinuti docker aplikaciju za deskotp
-priajviti se,
 
-u terminal upisat:
+
+Putem terminala
 ```
 docker build -t kcal-app .
 docker run -p 8080:8080 kcal-app
@@ -80,6 +68,9 @@ pip install -r requirements.txt
 python aplikacija.py
 ```
 Isto je dostupno na http://localhost:8080
+
+## Pokretanje kroz docker
+
 
 ## Datoteke koristene u ovom projektu 
 
